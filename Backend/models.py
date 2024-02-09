@@ -21,11 +21,12 @@ class Worker(Base):
                         nullable=False, server_default=text('now()'))
     
 
-class Delivery(Base):
+class Peeling(Base):
     __tablename__ = 'peelings'
     id = Column(Integer, primary_key=True, nullable=False, index=True)
     delivery_date = Column(TIMESTAMP(timezone=True),
                            nullable=False, server_default=text('now()'))
+    worker_id = Column(Integer, ForeignKey("workers.id"))
     kilos = Column(REAL, nullable=False)
     return_date = Column(TIMESTAMP(timezone=True))
     total = Column(REAL)
@@ -36,4 +37,4 @@ class Delivery(Base):
     paid = Column(Boolean, server_default='False', nullable=False)
     comments = Column(String)
     payment_date = Column(TIMESTAMP(timezone=True))
-    worker_id = Column(Integer, ForeignKey("workers.id"))
+    

@@ -32,7 +32,7 @@ async def get_worker(id: int, db:db_dependency):
     
     if not worker_query:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f"worker with id : {id} was not found")
+                            detail=f"worker with id: {id} does not exist")
     return worker_query
     
 
@@ -40,7 +40,8 @@ async def get_worker(id: int, db:db_dependency):
 async def delete_worker(id: int, db:db_dependency):
 
     worker_query = db.query(models.Worker).filter(models.Worker.id == id)
-    if worker_query.first() == None:
+    worker_exist = worker_query.first()
+    if worker_exist == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"worker with id: {id} does not exist")
     

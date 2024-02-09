@@ -21,15 +21,18 @@ class WorkerOut(WorkerBase):
         from_attributes = True
 
 
-
 class DeliveryBase(BaseModel):
     kilos: float
+    worker_id: int
+
 
 class DeliveryOut(DeliveryBase):
     id: int
     delivery_date: datetime
     class Config:
         from_attributes = True
+
+
 
 
 
