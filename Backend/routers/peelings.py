@@ -4,14 +4,14 @@ from database import db_dependency
 from typing import List
 
 router = APIRouter(
-    prefix="/deliveries",
-    tags=['Deliveries']
+    prefix="/peelings",
+    tags=['Peelings']
 )
 
 @router.post("/", response_model=schemas.DeliveryOut, status_code=status.HTTP_201_CREATED)
-async def create_delivery(delivery: schemas.DeliveryBase, db: db_dependency):
-    db_delivery = models.Delivery(**delivery.dict())
-    db.add(db_delivery)
+async def create_peeling(peeling: schemas.DeliveryBase, db: db_dependency):
+    peeling_query = models.Delivery(**peeling.model_dump())
+    db.add(peeling_query)
     db.commit()
-    db.refresh(db_delivery)
-    return db_delivery
+    db.refresh(peeling_query)
+    return peeling_query

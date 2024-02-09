@@ -6,7 +6,7 @@ from typing import List
 
 router = APIRouter(
     prefix="/workers",
-    tags=['Posts']
+    tags=['Workers']
 )
 
 @router.post("/", response_model=schemas.WorkerOut, status_code=status.HTTP_201_CREATED)
