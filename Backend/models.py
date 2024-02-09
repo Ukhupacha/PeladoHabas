@@ -1,5 +1,5 @@
 from database import Base
-from sqlalchemy import Column, Integer, String, Boolean, NUMERIC, REAL
+from sqlalchemy import Column, Integer, String, Boolean, NUMERIC, REAL, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
@@ -22,17 +22,18 @@ class Worker(Base):
     
 
 class Delivery(Base):
-    __tablename__ = 'deliveries'
+    __tablename__ = 'peelings'
     id = Column(Integer, primary_key=True, nullable=False, index=True)
     delivery_date = Column(TIMESTAMP(timezone=True),
                            nullable=False, server_default=text('now()'))
     kilos = Column(REAL, nullable=False)
-    reception_date = Column(TIMESTAMP(timezone=True))
+    return_date = Column(TIMESTAMP(timezone=True))
     total = Column(REAL)
     green = Column(REAL)
-    pealed_whole = Column(REAL)
-    pealed_split = Column(REAL)
+    peeled_whole = Column(REAL)
+    peeled_split = Column(REAL)
     soles = Column(NUMERIC)
     paid = Column(Boolean, server_default='False', nullable=False)
     comments = Column(String)
-    pay_date = Column(TIMESTAMP(timezone=True))    
+    payment_date = Column(TIMESTAMP(timezone=True))
+    worker_id = Column(Integer, ForeignKey("workers.id"))

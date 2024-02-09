@@ -11,11 +11,11 @@ router = APIRouter(
 
 @router.post("/", response_model=schemas.WorkerOut, status_code=status.HTTP_201_CREATED)
 async def create_worker(worker: schemas.WorkerBase, db: db_dependency):
-    db_worker = models.Worker(**worker.dict())
-    db.add(db_worker)
+    worker_query = models.Worker(**worker.model_dump())
+    db.add(worker_query)
     db.commit()
-    db.refresh(db_worker)
-    return db_worker
+    db.refresh(worker_query)
+    return worker_query
 
 
 @router.get("/", response_model=List[schemas.WorkerOut])
@@ -54,16 +54,13 @@ async def delete_worker(id: int, db:db_dependency):
 async def update_worker(id: int, updated_worker: schemas.WorkerBase, db:db_dependency):
     worker_query = db.query(models.Worker).filter(models.Worker.id == id)
     
-    worker = worker_query.first()
-    if worker == None:
+    worker_exist = worker_query.first()
+    if worker_exist == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"worker with id: {id} does not exist")
     
-    worker_query.update(**updated_worker.dict(), synchronize_session=False)
+    worker_query.update(updated_worker.model_dump(), synchronize_session=False)
     db.commit()
-    update = worker_query.first()
-    return update
-
-
-
+    worker_updated = worker_query.first()
+    return worker_updated
 
