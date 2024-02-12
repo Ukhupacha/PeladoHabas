@@ -7,7 +7,7 @@ import schemas
 import argparse
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-from routers import workers, deliveries, recoveries
+from routers import workers, deliveries, recoveries, payments
 
 app = FastAPI()
 
@@ -30,6 +30,7 @@ models.Base.metadata.create_all(bind=engine)
 app.include_router(workers.router)
 app.include_router(deliveries.router)
 app.include_router(recoveries.router)
+app.include_router(payments.router)
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Attendance app')

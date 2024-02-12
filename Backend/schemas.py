@@ -50,3 +50,14 @@ class RecoveryOut(RecoveryBase):
     delivery_date: datetime
     class Config:
         from_attributes = True
+
+
+class PaymentBase(BaseModel):
+    paid: bool
+    payment_date: date
+
+
+class PaymentOut(PaymentBase):
+    class Config:
+        from_attributes = True
+
