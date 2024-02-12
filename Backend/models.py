@@ -1,5 +1,5 @@
 from database import Base
-from sqlalchemy import Column, Integer, String, Boolean, NUMERIC, REAL, ForeignKey
+from sqlalchemy import Column, Integer, String, Boolean, NUMERIC, REAL, ForeignKey, Date
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from sqlalchemy.sql.expression import text
@@ -28,13 +28,13 @@ class Peeling(Base):
                            nullable=False, server_default=text('now()'))
     worker_id = Column(Integer, ForeignKey("workers.id"))
     kilos = Column(REAL, nullable=False)
-    return_date = Column(TIMESTAMP(timezone=True))
-    total = Column(REAL)
-    green = Column(REAL)
-    peeled_whole = Column(REAL)
-    peeled_split = Column(REAL)
-    soles = Column(NUMERIC)
-    paid = Column(Boolean, server_default='False', nullable=False)
+    return_date = Column(Date)
+    total = Column(REAL, default=0)    
+    peeled_whole = Column(REAL, default=0)
+    peeled_split = Column(REAL, default=0)
+    green = Column(REAL, default=0)
+    soles = Column(NUMERIC, default=0)
     comments = Column(String)
-    payment_date = Column(TIMESTAMP(timezone=True))
+    paid = Column(Boolean, server_default='False', nullable=False)
+    payment_date = Column(Date)
     

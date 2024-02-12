@@ -1,6 +1,6 @@
 
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, date
 
 class WorkerBase(BaseModel):    
     last_name: str
@@ -33,7 +33,20 @@ class DeliveryOut(DeliveryBase):
         from_attributes = True
 
 
+class RecoveryBase(BaseModel):
+    return_date : date
+    total : float
+    peeled_whole : float
+    peeled_split : float
+    green : float
+    soles : float
+    comments : str
 
 
-
-
+class RecoveryOut(RecoveryBase):
+    kilos: float
+    worker_id: int
+    id: int
+    delivery_date: datetime
+    class Config:
+        from_attributes = True
