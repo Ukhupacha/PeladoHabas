@@ -5,7 +5,7 @@ from typing import Annotated
 from fastapi import Depends
 
 
-URL_DATABASE = 'postgresql://pelado:pelado@10.1.1.70/prueba'
+URL_DATABASE = 'postgresql://pelado:pelado@10.1.1.20/prueba'
 
 engine = create_engine(URL_DATABASE)
 
